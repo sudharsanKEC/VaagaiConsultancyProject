@@ -1,34 +1,32 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 const Notification = ({ message, type, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      onClose()
-    }, 2000)
+      onClose();
+    }, 2000);
 
-    return () => clearTimeout(timer)
-  }, [onClose])
+    return () => clearTimeout(timer);
+  }, [onClose]);
 
-  if (!message) return null
+  if (!message) return null;
+
+  const isError = type === "error";
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: "20px",
-        right: "20px",
-        padding: "12px 20px",
-        borderRadius: "8px",
-        backgroundColor: type === "error" ? "#ffe5e5" : "#e6ffed",
-        color: type === "error" ? "#b30000" : "#006600",
-        fontWeight: "500",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-        zIndex: 1000,
-      }}
-    >
-      {message}
+    <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 sm:justify-end sm:px-6">
+      <div
+        className={[
+          "inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium shadow-md",
+          isError
+            ? "border-red-200 bg-red-50 text-red-700"
+            : "border-emerald-200 bg-emerald-50 text-emerald-700",
+        ].join(" ")}
+      >
+        {message}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Notification
+export default Notification;
